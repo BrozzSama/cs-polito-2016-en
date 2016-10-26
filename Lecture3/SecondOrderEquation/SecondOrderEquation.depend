@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1477396828 source:/home/francesco/cs_polito/Lecture3/SecondOrderEquation/main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+

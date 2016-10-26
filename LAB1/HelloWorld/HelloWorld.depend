@@ -1,0 +1,4 @@
+# depslib dependency file v1.0
+1476343192 source:/home/francesco/cs_polito/LAB1/HelloWorld/main.c
+	<stdio.h>
+
