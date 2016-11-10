@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1478163162 source:/home/francesco/cs_polito/LAB4/Exercise4.1/main.c
+	<stdio.h>
+	<stdlib.h>
+
