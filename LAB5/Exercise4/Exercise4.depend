@@ -1,6 +1,0 @@
-# depslib dependency file v1.0
-1479073719 source:/home/francesco/cs_polito/LAB5/Exercise4/main.c
-	<stdio.h>
-	<stdlib.h>
-	<stdbool.h>
-
