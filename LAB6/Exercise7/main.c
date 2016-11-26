@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define UNIT 0.0000000000000002
 
 double invsin(double z1, double z2, double k, double e);
 
