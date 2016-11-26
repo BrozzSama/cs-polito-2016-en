@@ -12,9 +12,9 @@ int main()
     scanf("%lg", &z1);
     printf("Type right bound (remember that the interval must be monotone): ");
     scanf("%lg", &z2);
-    printf("The Type the value of sin: ");
+    printf("Type the value of sin: ");
     scanf("%lg", &k);
-    printf("Type the values of iteration (the more values, the more precision):  ");
+    printf("Type the number of iterations (more iterations=more precision):  ");
     scanf("%lg", &n);
     printf("Result: %lg", invsin(z1, z2, k, n));
     return 0;
@@ -36,12 +36,16 @@ double invsin(double z1, double z2, double k, double e){
     double n1,n2;
     if (monotone == 1){
         while (n<e){
-            solution=(z1+z2)/2;
+            solution=(double)(z1+z2)/(double)2;
             if ((sin(solution)-k<0 && sin(z1)-k>0) || (sin(solution)-k>0 && sin(z1)-k<0)){
                 z2 = solution;
             }
             else if((sin(solution)-k<0 && sin(z2)-k>0) || (sin(solution)-k>0 && sin(z2)-k<0)){
                 z1 = solution;
+            }
+            else{
+            printf("Cannot find corresponding value! Please change the bounds...");
+            exit(1);
             }
             n++;
             if (n==n-1){
