@@ -6,7 +6,7 @@ double invsin(double z1, double z2, double k, double e);
 
 int main()
 {
-    double z1,z2,k,n;
+    double z1,z2,k,c;
     printf("Type the value of \n");
     printf("Type left bound (remember that the interval must be monotone): ");
     scanf("%lg", &z1);
@@ -14,9 +14,9 @@ int main()
     scanf("%lg", &z2);
     printf("Type the value of sin: ");
     scanf("%lg", &k);
-    printf("Type the number of iterations (more iterations=more precision):  ");
-    scanf("%lg", &n);
-    printf("Result: %lg", invsin(z1, z2, k, n));
+    printf("Type the precision: ");
+    scanf("%lg", &c);
+    printf("Result: %lf", invsin(z1, z2, k, c));
     return 0;
 }
 
@@ -33,9 +33,9 @@ double invsin(double z1, double z2, double k, double e){
             monotone=0;
         }
     }
-    double n1,n2;
     if (monotone == 1){
-        while (n<e){
+        double threshold = 1;
+        while (threshold > e){
             solution=(double)(z1+z2)/(double)2;
             if ((sin(solution)-k<0 && sin(z1)-k>0) || (sin(solution)-k>0 && sin(z1)-k<0)){
                 z2 = solution;
@@ -44,19 +44,13 @@ double invsin(double z1, double z2, double k, double e){
                 z1 = solution;
             }
             else{
-            printf("Cannot find corresponding value! Please change the bounds...");
-            exit(1);
+                printf("Cannot find corresponding value! Please change the bounds...");
+                exit(1);
             }
             n++;
-            if (n==n-1){
-                n1=solution;
-            }
-            if (n==n-2){
-                n2=solution;
-            }
+            threshold = fabs(k - sin(solution));
         }
-        printf("Difference of last two iterations: %lg\n", n2-n1);
-        return solution;
+    return solution;
     }
     if (monotone == 0){
         printf("Not monotone... Won't return value.");
