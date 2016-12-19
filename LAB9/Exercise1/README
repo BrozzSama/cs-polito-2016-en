@@ -1,7 +1,5 @@
 Hey you!
-In order to successfully use this program you must execute your program with the swamp file inside your working directory!
-
-If you're using codeblocks, import the .swamp file and compile the program!
+In order to successfully use this program you must execute your program with the swamp as an argument!
 
 Obviously in order to properly debug you can simply edit the swamp file to suit your needs, it's a simple matrix after all!
 
