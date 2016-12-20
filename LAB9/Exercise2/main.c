@@ -94,7 +94,7 @@ int insert_product(float price[], int n, char new_product[], float price_new_pro
 
     //File already exists no check needed
     FILE* input = fopen(database, "w");
-    for (int i = 0; i<n; i++){
+    for (int i = 0; i<n && price[i]!=FREE; i++){
         fprintf(input, "%s %f\n", warehouse[i], price[i]);
     }
     fclose(input);
