@@ -8,6 +8,8 @@
 char warehouse[N][M];
 int insert_product(float price[], int n, char new_product[], float price_new_product, char database[]);
 void print_all(float price[], int n, float *avg, float *max);
+int update_product(float price[], int n, char product[] , float new_price, char database[]);
+int remove_product(float price[], int n, char old_product[], char database[]);
 
 int main(int argc, char *argv[])
 {
@@ -38,6 +40,8 @@ int main(int argc, char *argv[])
     printf("Choose an option for %s: \n", argv[1]);
     printf("1. Add item to warehouse\n");
     printf("2. List items\n");
+    printf("3. Update price of an item\n");
+    printf("4. Remove an item from the list\n");
     printf("5. Exit program\n");
     fscanf(stdin, "%d", &choice);
     switch(choice){
@@ -64,7 +68,30 @@ int main(int argc, char *argv[])
             print_all(price, N, &avg, &max);
             printf("The average price is %f and the maximum price is %f EUR\n", avg, max);
             break;
-
+        case 3:
+            print_all(price, N, &avg, &max);
+            printf("Type the name of the product you want to change the price of:\n");
+            fscanf(stdin, "%s", name);
+            printf("Insert the new price:\n");
+            scanf("%f", &price_input);
+            if (update_product(price, N, name, price_input, argv[1]) == 1){
+                printf("Price updated!\n");
+            }
+            else {
+                fprintf(stderr, "The price was not updated, please check that the product is in the list\n");
+            }
+            break;
+        case 4:
+            print_all(price, N, &avg, &max);
+            printf("Type the name of the product you want to remove from the list:\n");
+            fscanf(stdin, "%s", name);
+            if (remove_product(price, N, name, argv[1]) == 1){
+                printf("Product removed successfully!");
+            }
+            else{
+                fprintf(stderr, "The product could not be found!");
+            }
+            break;
         case 5:
             printf("Exiting... \n");
             exit(EXIT_SUCCESS);
@@ -95,8 +122,10 @@ int insert_product(float price[], int n, char new_product[], float price_new_pro
 
     //File already exists no check needed
     FILE* input = fopen(database, "w");
-    for (int i = 0; i<n && price[i]!=FREE; i++){
-        fprintf(input, "%s %f\n", warehouse[i], price[i]);
+    for (int i = 0; i<n; i++){
+        if (price[i]!=FREE){
+            fprintf(input, "%s %f\n", warehouse[i], price[i]);
+        }
     }
     fclose(input);
     return 1;
@@ -105,15 +134,71 @@ int insert_product(float price[], int n, char new_product[], float price_new_pro
 void print_all(float price[], int n, float *avg, float *max){
     float a = 0;
     float sum = 0;
-    for (int i = 0; i<n && price[i]!=-2; i++){
-        printf("%s %f\n", warehouse[i], price[i]);
-        a++;
-        sum+=price[i];
-        if (price[i] > *max){
-            *max = price[i];
+    for (int i = 0; i<n; i++){
+        if (price[i]!=FREE){
+            printf("%s %f\n", warehouse[i], price[i]);
+            a++;
+            sum+=price[i];
+            if (price[i] > *max){
+                *max = price[i];
+            }
         }
     }
     *avg = sum/a;
     return;
 }
+int update_product(float price[], int n, char product[] , float new_price, char database[]){
+    int found = 0;
+    int index;
+    while(!found){
+        for (int i = 0; !found && i<n; i++){
+            if (strcmp(warehouse[i], product) == 0){
+                found = 1;
+                index = i;
+            }
+        }
+        //IF the counter finished without finding, return error code 0
+        if (!found){
+            return 0;
+        }
+    }
+    price[index]=new_price;
+    //Write new price to database
+    FILE* input = fopen(database, "w");
+    for (int i = 0; i<n; i++){
+        if (price[i]!=FREE){
+            fprintf(input, "%s %f\n", warehouse[i], price[i]);
+        }
+    }
+    fclose(input);
+    return 1;
+}
+
+int remove_product(float price[], int n, char old_product[], char database[]){
+    int found = 0;
+    int index;
+    while(!found){
+        for (int i = 0; !found && i<n; i++){
+            if (strcmp(warehouse[i], old_product) == 0){
+                found = 1;
+                index = i;
+            }
+        }
+        //IF the counter finished without finding, return error code 0
+        if (!found){
+            return 0;
+        }
+    }
+    price[index]=FREE;
+    //Write new price to database
+    FILE* input = fopen(database, "w");
+    for (int i = 0; i<n; i++){
+        if (price[i]!=FREE){
+            fprintf(input, "%s %f\n", warehouse[i], price[i]);
+        }
+    }
+    fclose(input);
+    return 1;
+}
+
 

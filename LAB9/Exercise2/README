@@ -1,3 +1,5 @@
 To execute the program use the warehouse as first argument!
 
 Remember that the file must be in the working directory!
+
+NOTE: This program works, but may have some bugs, if you want a more robust version of this code, check LAB9/Exercise4
