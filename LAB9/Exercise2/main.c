@@ -88,11 +88,15 @@ int insert_product(float price[], int n, char new_product[], float price_new_pro
             return 0;
         }
     }
-    //Nonempty gives us the first empty space!
-    strcpy(warehouse[nonempty], new_product);
-    price[nonempty]=price_new_product;
-
-    //File already exists no check needed
+    //Nonempty gives us the first empty space, but we have to subtract one since we are dealing with indexes!
+    for (int i = 0; i<n; i++){
+	if (price[i]==FREE){    
+		strcpy(warehouse[i], new_product);
+    		price[i]=price_new_product;
+		i=n;
+    	}
+    }
+    //File already exists -> no check needed
     FILE* input = fopen(database, "w");
     for (int i = 0; i<n && price[i]!=FREE; i++){
         fprintf(input, "%s %f\n", warehouse[i], price[i]);
@@ -104,7 +108,7 @@ int insert_product(float price[], int n, char new_product[], float price_new_pro
 void print_all(float price[], int n, float *avg, float *max){
     float a = 0;
     float sum = 0;
-    for (int i = 0; i<n && price[i]!=-2; i++){
+    for (int i = 0; i<n && price[i]!=FREE; i++){
         printf("%s %f\n", warehouse[i], price[i]);
         a++;
         sum+=price[i];
