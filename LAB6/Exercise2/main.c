@@ -22,7 +22,7 @@ int main()
                 same_elements++;
             }
     }
-    if (same_elements >= 10){
+    if (same_elements >= SIZE){
         printf("The two arrays contain the same elements");
     }
     return 0;
