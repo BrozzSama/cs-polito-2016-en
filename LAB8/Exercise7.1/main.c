@@ -29,10 +29,9 @@ int main()
     for (int j = 0; j<COLUMNS; j++){
         for (int i = 0; i<ROWS; i++){
             //Print result if we found a sequence of at least three zeroes!
-            if (data[j][i] == SEARCH && data[j][i+1] == SEARCH && data[j][i+2] == SEARCH){
+           if (data[i][j] == SEARCH && data[i+1][j] == SEARCH && data[i+2][j] == SEARCH){
                 printf("Found sequence in column %d\n", j+1);
                 j=ROWS;
-            }
         }
     }
 

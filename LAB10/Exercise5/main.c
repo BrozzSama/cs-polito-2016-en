@@ -1,22 +1,31 @@
-//Let's make this s* even MORE generic
 #include <stdio.h>
 #include <stdlib.h>
 #define COLUMNS 5
-#define ROWS 3
+#define ROWS 5
 //Value that needs to be searched
-#define SEARCH 4
-#define LENGTH_SEQ 2
+#define SEARCH 0
+#define LENGTH_SEQ 3
 
-int main()
+int main(int argc, char* argv[])
 {
+    if (argc != 2){
+        fprintf(stderr, "ERROR! Please specify a file!");
+        exit(EXIT_FAILURE);
+    }
     int data[ROWS][COLUMNS];
+    int found = 0;
+    FILE *input = fopen(argv[1], "r");
+    if (input == NULL){
+        fprintf(stderr, "The file does not exist!");
+        exit(EXIT_FAILURE);
+    }
     int counter;
     for (int i = 0; i<ROWS; i++){
-        printf("Enter the %d row (Maximum values allowed: %d): ", i+1, COLUMNS);
         for (int j = 0; j<COLUMNS; j++){
-            scanf("%d", &data[i][j]);
+            fscanf(input, "%d", &data[i][j]);
         }
     }
+    fclose(input);
     //Got the input, let's check!
     for (int i = 0; i<ROWS; i++){
         for (int j = 0; j<COLUMNS; j++){
