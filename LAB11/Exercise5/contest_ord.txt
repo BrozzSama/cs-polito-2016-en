@@ -1,0 +1,6 @@
+carla 0
+filippo 45
+gianluca 43
+giovanni 0
+matteo 32
+simona 12
